@@ -36,7 +36,7 @@ fn main() -> anyhow::Result<()> {
         let mut stdout_handle = stdout.lock();
         let output = convert_output(hash_digest, args.output_format);
         stdout_handle
-            .write(&output)
+            .write_all(&output)
             .expect("Writing result to stdout failing");
     }
 

@@ -38,7 +38,7 @@ impl THashOptions {
     }
 }
 
-fn parse_options(opts: &Vec<String>) -> anyhow::Result<BTreeMap<String, String>> {
+fn parse_options(opts: &[String]) -> anyhow::Result<BTreeMap<String, String>> {
     let mut result = BTreeMap::new();
     for item in opts.iter() {
         let (key, val) = item.split_once('=').ok_or(anyhow::anyhow!(

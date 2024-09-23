@@ -16,18 +16,18 @@ pub fn make_hasher(
     options: &BTreeMap<String, String>,
 ) -> anyhow::Result<Box<dyn DynHasher>> {
     let f: Box<dyn DynHasher> = match algo {
-        HashAlgorithm::Blake2b => Box::new(make_blake2b_hasher(&options, iters)?),
-        HashAlgorithm::Blake2s => Box::new(make_blake2s_hasher(&options, iters)?),
-        HashAlgorithm::Md5 => Box::new(make_md5_hasher(&options, iters)?),
-        HashAlgorithm::Sha1 => Box::new(make_sha1_hasher(&options, iters)?),
-        HashAlgorithm::Sha224 => Box::new(make_sha224_hasher(&options, iters)?),
-        HashAlgorithm::Sha256 => Box::new(make_sha256_hasher(&options, iters)?),
-        HashAlgorithm::Sha384 => Box::new(make_sha384_hasher(&options, iters)?),
-        HashAlgorithm::Sha512 => Box::new(make_sha512_hasher(&options, iters)?),
-        HashAlgorithm::Sha3_224 => Box::new(make_sha3_224_hasher(&options, iters)?),
-        HashAlgorithm::Sha3_256 => Box::new(make_sha3_256_hasher(&options, iters)?),
-        HashAlgorithm::Sha3_384 => Box::new(make_sha3_384_hasher(&options, iters)?),
-        HashAlgorithm::Sha3_512 => Box::new(make_sha3_512_hasher(&options, iters)?),
+        HashAlgorithm::Blake2b => Box::new(make_blake2b_hasher(options, iters)?),
+        HashAlgorithm::Blake2s => Box::new(make_blake2s_hasher(options, iters)?),
+        HashAlgorithm::Md5 => Box::new(make_md5_hasher(options, iters)?),
+        HashAlgorithm::Sha1 => Box::new(make_sha1_hasher(options, iters)?),
+        HashAlgorithm::Sha224 => Box::new(make_sha224_hasher(options, iters)?),
+        HashAlgorithm::Sha256 => Box::new(make_sha256_hasher(options, iters)?),
+        HashAlgorithm::Sha384 => Box::new(make_sha384_hasher(options, iters)?),
+        HashAlgorithm::Sha512 => Box::new(make_sha512_hasher(options, iters)?),
+        HashAlgorithm::Sha3_224 => Box::new(make_sha3_224_hasher(options, iters)?),
+        HashAlgorithm::Sha3_256 => Box::new(make_sha3_256_hasher(options, iters)?),
+        HashAlgorithm::Sha3_384 => Box::new(make_sha3_384_hasher(options, iters)?),
+        HashAlgorithm::Sha3_512 => Box::new(make_sha3_512_hasher(options, iters)?),
     };
 
     Ok(f)
