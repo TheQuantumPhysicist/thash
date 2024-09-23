@@ -1,0 +1,11 @@
+[package]
+name = "hashing-lib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+blake2 = "0.10"
+md-5 = "0.10"
+sha-1 = "0.10"
+sha2 = "0.10"
+sha3 = "0.10"
