@@ -2,11 +2,11 @@ mod generic;
 
 use std::{collections::BTreeMap, num::NonZeroU64};
 
-use generic::{DynHasher, GenericHasher};
-use hashing_lib::{
+use crate::hashing_lib::{
     Blake2b, Blake2s, Md5, Sha1, Sha224, Sha256, Sha384, Sha3_224, Sha3_256, Sha3_384, Sha3_512,
     Sha512,
 };
+use generic::{DynHasher, GenericHasher};
 
 use crate::options::HashAlgorithm;
 

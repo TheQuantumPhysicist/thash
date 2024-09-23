@@ -1,6 +1,6 @@
 use std::num::NonZeroU64;
 
-use hashing_lib::Hasher;
+use crate::hashing_lib::Hasher;
 
 pub struct GenericHasher<H: Hasher> {
     hasher: H,

@@ -8,11 +8,15 @@ authors = ["Samer Afach"]
 edition = "2021"
 
 [dependencies]
-hashing-lib = { path = "hashing-lib" }
-
 anyhow = "1.0"
 base64 = "0.22"
 clap = { version = "4.5", features = ["derive"] }
 hex = "0.4"
 strum = "0.26"
 strum_macros = "0.26"
+
+blake2 = "0.10"
+md-5 = "0.10"
+sha-1 = "0.10"
+sha2 = "0.10"
+sha3 = "0.10"

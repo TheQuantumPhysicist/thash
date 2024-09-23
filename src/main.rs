@@ -1,4 +1,5 @@
 mod hasher;
+mod hashing_lib;
 mod options;
 
 use std::io::{Read, Write};
