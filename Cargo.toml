@@ -4,7 +4,7 @@ description = "A terminal program for hashing with many algorithms and many outp
 readme = "README.md"
 license = "MIT"
 version = "0.1.0"
-authors = ["Samer Afach"]
+authors = ["TheQuantumPhysicist"]
 edition = "2021"
 
 [dependencies]
