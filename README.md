@@ -2,6 +2,8 @@
 
 A fast and versatile terminal hashing program that prints the hash digest to stdout, with many hashing algorithms, many output formats, and support to request the number of iterations for hashing.
 
+This program can be seen as a drop-in replacement for all `XXXsum` programs on Linux, usage-wise, assuming the defaults are desired.
+
 ## Why?
 
 Basically I wanted something more flexible than `sha256sum`, `md5sum` and the other similar terminal tools. It always helps to have a tool that can do multiple things with hashing, so I spent some time writing a good, reliable program.
@@ -24,7 +26,7 @@ The data input is passed through stdin. This program can be seen as a drop-in re
 
 Anyway, here are some examples on how to use this program, with the expected outcome:
 
-- Hash the string "abc" using blake2b (the default hashing algorithm), and output the hash digest as hex (default output).
+- Hash the string "abc" using blake2b (the default hashing algorithm), and output the hash digest as hex (default output format).
 
 ```bash
 $ echo -n "abc" | thash
@@ -80,7 +82,9 @@ $ echo -n "abc" | thash -a sha256 -f binary | thash -a sha256
 4f8b42c22dd3729b519ba6f68d2da7cc5b2d606d05daed5ad5128cc03e6c6358
 ```
 
-Notice how outputting binary is now useful. You can pipe your data through multiple hash functions.
+Notice how outputting binary is now useful.
+
+- You can pipe your data through multiple hash functions.
 
 ```bash
 $ echo -n "abc" | thash -a sha256 -f binary | thash -a blake2s -f binary | thash -a sha3-224
@@ -97,7 +101,7 @@ This will hash "abc" with sha256, hash the binary result with blake2s, then hash
 
 We use `hyperfine` for benchmarking. You can install it with `cargo install hyperfine`, or `apt install hyperfine` on Debian derivatives, or `brew install hyperfine` for MacOS, assuming you have homebrew.
 
-To run benchmark, first, create a file with random data, followed by some hashing program to ensure any caching operation is done:
+To run benchmark, first, create a file with random data (below is a 1 GB file), followed by some hashing program to ensure any disk-caching operation in the OS for the file is done:
 
 ```bash
 dd if=/dev/random of=random-file.bin bs=1M count=1024
