@@ -76,3 +76,33 @@ impl_hasher_stream!(Sha3_224, typenum::U28);
 impl_hasher_stream!(Sha3_256, typenum::U32);
 impl_hasher_stream!(Sha3_384, typenum::U48);
 impl_hasher_stream!(Sha3_512, typenum::U64);
+
+#[derive(Clone)]
+pub struct Blake3 {
+    hasher: blake3::Hasher,
+}
+
+impl Hasher for Blake3 {
+    type OutputSize = typenum::U32;
+
+    fn new() -> Self {
+        Self {
+            hasher: blake3::Hasher::new(),
+        }
+    }
+
+    fn write<T: AsRef<[u8]>>(&mut self, in_bytes: T) -> &mut Self {
+        self.hasher.update(in_bytes.as_ref());
+        self
+    }
+
+    fn reset(&mut self) {
+        self.hasher.reset();
+    }
+
+    fn finalize(&mut self) -> GenericArray<u8, Self::OutputSize> {
+        let result = self.hasher.finalize();
+        let array: [u8; 32] = result.into();
+        array.into()
+    }
+}

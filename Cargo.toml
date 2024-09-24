@@ -17,6 +17,7 @@ strum = "0.26"
 strum_macros = "0.26"
 
 blake2 = "0.10"
+blake3 = "1.5"
 md-5 = "0.10"
 sha-1 = "0.10"
 sha2 = "0.10"

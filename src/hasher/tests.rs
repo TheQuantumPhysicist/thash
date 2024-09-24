@@ -232,6 +232,29 @@ fn blake2s() {
 }
 
 #[test]
+fn blake3() {
+    // To generate, you can cut parts from the command below
+    // echo -n "abc" | ./thash -a blake3 -f binary | ./thash -a blake3 -f binary | ./thash -a blake3 -f binary | ./thash -a blake3 -f binary | b3sum
+    let expected = [
+        "6437b3ac38465133ffb63b75273a8db548c558465d79db03fd359c6cd5bd9d85",
+        "dc2f738d17b8a7ec03efdd0a95e8d3924b8e05965040ab6dcafd992994012bd4",
+        "b908276b102aa54b21e9c7b84f34cf8efda591157c153cdf73f186a5005ab649",
+        "815db8711bd9bd1c759ca340c3279d59fb43c51d3a9a2a975691f72f000122a7",
+        "acfec95e0441b70ebce15e924c3d2edacd40d5b2495dc24eb5d3e4ad2f29ca9b",
+    ];
+    for (i, el) in expected.into_iter().enumerate() {
+        let mut hasher = make_hasher(
+            HashAlgorithm::Blake3,
+            (i as u64 + 1).try_into().unwrap(),
+            &[].into(),
+        )
+        .unwrap();
+        hasher.write(b"abc");
+        assert_eq!(hex::encode(hasher.finalize()), el);
+    }
+}
+
+#[test]
 fn md5() {
     let expected = [
         "900150983cd24fb0d6963f7d28e17f72",

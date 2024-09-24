@@ -70,6 +70,7 @@ pub enum HashAlgorithm {
     #[default]
     Blake2b,
     Blake2s,
+    Blake3,
     Md5,
     Sha1,
     Sha224,
