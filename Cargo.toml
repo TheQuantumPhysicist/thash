@@ -5,6 +5,7 @@ readme = "README.md"
 license = "MIT"
 version = "0.1.1"
 authors = ["TheQuantumPhysicist"]
+repository = "https://github.com/TheQuantumPhysicist/thash"
 edition = "2021"
 
 [dependencies]
