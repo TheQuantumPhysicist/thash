@@ -91,9 +91,11 @@ This will hash "abc" with sha256, hash the binary result with blake2s, then hash
 
 ## Performance
 
-`thash` beats all regular tools, like `sha256`, `b2sum`, etc, in performance.
+`thash` beats all regular tools, like `sha256`, `b2sum`, etc, in performance. On Mac, the performance of `thash` is even better than shown below, and is faster for everything. However, `md5` is the only exception we found, where `thash` is slower on Linux. Note that this is not gospel, and your machine/OS may behave differently. Feel free to re-run these benchmarks on your computer to evaluate it.
 
-We use `hyperfine` for benchmarking. You can install it with `cargo install hyperfine`.
+### Benchmarking methodology
+
+We use `hyperfine` for benchmarking. You can install it with `cargo install hyperfine`, or `apt install hyperfine` on Debian derivatives, or `brew install hyperfine` for MacOS, assuming you have homebrew.
 
 To run benchmark, first, create a file with random data, followed by some hashing program to ensure any caching operation is done:
 
@@ -157,7 +159,3 @@ Benchmark 1: cat random-file.bin | sha1sum
   Time (mean ± σ):      1.247 s ±  0.029 s    [User: 1.120 s, System: 0.472 s]
   Range (min … max):    1.209 s …  1.288 s    10 runs
 ```
-
-#### Notes on performance
-
-On Mac, the performance of `thash` is even better, and is faster for everything. But `md5` is the only exception I found, where it is slower on Linux.
