@@ -101,7 +101,7 @@ This will hash "abc" with sha256, hash the binary result with blake2s, then hash
 
 We use `hyperfine` for benchmarking. You can install it with `cargo install hyperfine`, or `apt install hyperfine` on Debian derivatives, or `brew install hyperfine` for MacOS, assuming you have homebrew.
 
-To run benchmark, first, create a file with random data (below is a 1 GB file), followed by some hashing program to ensure any disk-caching operation in the OS for the file is done:
+To benchmark, first, create a file with random data (below is a 1 GB file), followed by some hashing program to ensure any disk-caching operation in the OS for the file is done:
 
 ```bash
 dd if=/dev/random of=random-file.bin bs=1M count=1024
