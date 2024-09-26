@@ -23,15 +23,13 @@ impl<H: Hasher> GenericHasher<H> {
         self
     }
 
-    pub fn finalize(&mut self) -> Vec<u8> {
+    pub fn finalize_and_reset(&mut self) -> Vec<u8> {
         let mut hash = self.hasher.finalize_and_reset();
         // We hashed the data once, let's do the remaining iterations
         for _ in 0..self.iters.get() - 1 {
-            self.hasher.reset();
             self.hasher.write(hash);
             hash = self.hasher.finalize_and_reset();
         }
-        self.hasher.reset();
         hash.to_vec()
     }
 }
@@ -39,7 +37,7 @@ impl<H: Hasher> GenericHasher<H> {
 pub trait DynHasher {
     fn write(&mut self, data: &[u8]);
 
-    fn finalize(&mut self) -> Vec<u8>;
+    fn finalize_and_reset(&mut self) -> Vec<u8>;
 }
 
 impl<H: Hasher> DynHasher for GenericHasher<H> {
@@ -47,8 +45,8 @@ impl<H: Hasher> DynHasher for GenericHasher<H> {
         self.write(data);
     }
 
-    fn finalize(&mut self) -> Vec<u8> {
-        self.finalize()
+    fn finalize_and_reset(&mut self) -> Vec<u8> {
+        self.finalize_and_reset()
     }
 }
 
@@ -60,7 +58,7 @@ where
         self.deref_mut().write(data)
     }
 
-    fn finalize(&mut self) -> Vec<u8> {
-        self.deref_mut().finalize()
+    fn finalize_and_reset(&mut self) -> Vec<u8> {
+        self.deref_mut().finalize_and_reset()
     }
 }

@@ -20,7 +20,7 @@ fn sha1() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -42,7 +42,7 @@ fn sha224() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -64,7 +64,7 @@ fn sha256() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -86,7 +86,7 @@ fn sha384() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -108,7 +108,7 @@ fn sha512() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -130,7 +130,7 @@ fn sha3_224() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -152,7 +152,7 @@ fn sha3_256() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -174,7 +174,7 @@ fn sha3_384() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -196,7 +196,7 @@ fn sha3_512() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -218,7 +218,7 @@ fn blake2b() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -240,7 +240,7 @@ fn blake2s() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -264,7 +264,7 @@ fn blake3() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -286,7 +286,7 @@ fn md5() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }
 
@@ -310,6 +310,6 @@ fn k12() {
         )
         .unwrap();
         hasher.write(b"abc");
-        assert_eq!(hex::encode(hasher.finalize()), el);
+        assert_eq!(hex::encode(hasher.finalize_and_reset()), el);
     }
 }

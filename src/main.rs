@@ -27,7 +27,7 @@ fn main() -> anyhow::Result<()> {
                 buffer_into_hasher(&mut hasher, stdin.lock())?
             }
         }
-        hasher.finalize()
+        hasher.finalize_and_reset()
     };
 
     {
