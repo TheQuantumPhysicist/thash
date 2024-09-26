@@ -5,17 +5,22 @@ use clap::{Parser, ValueEnum};
 #[derive(Parser, Clone, Debug, Default)]
 pub struct THashOptions {
     /// The algorithm that will be used to hash the given data.
-    #[arg(long, short('a'), default_value_t = HashAlgorithm::default())]
+    #[arg(long, short('a'), value_name("ALGORITHM"), default_value_t = HashAlgorithm::default())]
     pub hash_algo: HashAlgorithm,
 
     /// The number of iterations for hashing the data, recursively.
     /// This works by using the output of a hash function (as bytes) as input for the same hash function.
-    #[arg(long, short('i'), default_value_t = 1, value_parser=parse_iters)]
+    #[arg(long, short('i'), value_name("NUMBER"), default_value_t = 1, value_parser=parse_iters)]
     iters: u64,
 
     /// Output format. The result will go into stdout.
-    #[arg(long, short('f'), default_value_t = OutputFormat::default())]
+    #[arg(long, short('F'), default_value_t = OutputFormat::default())]
     pub output_format: OutputFormat,
+
+    /// An optional path of the source file to read, in case you do not want to use stdin.
+    /// If not provided, the program expects to get data from stdin.
+    #[arg(long, short('f'))]
+    pub file: Option<std::path::PathBuf>,
 
     /// Options related to hashing algorithms. Some algorithms provide options (or parameters)
     /// related to their hashing. These can be set here.

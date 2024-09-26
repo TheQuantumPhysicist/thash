@@ -4,8 +4,9 @@ mod options;
 
 use std::io::{Read, Write};
 
+use anyhow::Context;
 use clap::Parser;
-use hasher::make_hasher;
+use hasher::{generic::DynHasher, make_hasher};
 use options::OutputFormat;
 
 fn main() -> anyhow::Result<()> {
@@ -13,24 +14,21 @@ fn main() -> anyhow::Result<()> {
 
     let options = args.options()?;
 
-    let mut hasher = make_hasher(args.hash_algo, args.iters(), &options)?;
+    let hash_digest = {
+        let mut hasher = make_hasher(args.hash_algo, args.iters(), &options)?;
 
-    {
-        let mut buffer = [0; 4096];
-        let stdin = std::io::stdin();
-        let mut stdin_handle = stdin.lock();
-
-        loop {
-            let bytes_read = stdin_handle.read(&mut buffer)?;
-
-            if bytes_read == 0 {
-                break;
+        match args.file {
+            Some(f) => {
+                let reader = open_file(f)?;
+                buffer_into_hasher(&mut hasher, reader)?;
             }
-
-            hasher.write(&buffer[..bytes_read]);
+            None => {
+                let stdin = std::io::stdin();
+                buffer_into_hasher(&mut hasher, stdin.lock())?
+            }
         }
-    }
-    let hash_digest = hasher.finalize();
+        hasher.finalize()
+    };
 
     {
         let stdout = std::io::stdout();
@@ -44,18 +42,58 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
+fn open_file(p: impl AsRef<std::path::Path>) -> anyhow::Result<impl Read> {
+    let p = p.as_ref();
+    if !p.exists() {
+        return Err(anyhow::anyhow!("File not found: {}", p.display()));
+    }
+
+    if !p.is_file() {
+        return Err(anyhow::anyhow!(
+            "Path provided is not a file or unreadable: {}",
+            p.display()
+        ));
+    }
+
+    let f = std::fs::File::open(&p).context(format!("Opening file failed: {}", p.display()))?;
+
+    Ok(f)
+}
+
+fn buffer_into_hasher(hasher: &mut impl DynHasher, mut source: impl Read) -> anyhow::Result<()> {
+    let mut buffer = [0; 4096];
+
+    loop {
+        let bytes_read = source.read(&mut buffer)?;
+
+        if bytes_read == 0 {
+            break Ok(());
+        }
+
+        hasher.write(&buffer[..bytes_read]);
+    }
+}
+
 fn convert_output(output: Vec<u8>, output_format: OutputFormat) -> Vec<u8> {
     use base64::prelude::*;
 
     match output_format {
-        OutputFormat::Binary => output,
-        OutputFormat::HexLower => hex::encode(&output).as_bytes().to_vec(),
-        OutputFormat::HexUpper => hex::encode_upper(&output).as_bytes().to_vec(),
-        OutputFormat::Base64 => BASE64_STANDARD.encode(output).as_bytes().to_vec(),
-        OutputFormat::Base64NoPad => BASE64_STANDARD_NO_PAD.encode(output).as_bytes().to_vec(),
-        OutputFormat::Base64UrlSafe => BASE64_URL_SAFE.encode(output).as_bytes().to_vec(),
-        OutputFormat::Base64UrlSafeNoPad => {
-            BASE64_URL_SAFE_NO_PAD.encode(output).as_bytes().to_vec()
-        }
+        OutputFormat::Binary => output, // We don't add a new line to binary mode
+        OutputFormat::HexLower => newlined(hex::encode(&output)).as_bytes().to_vec(),
+        OutputFormat::HexUpper => newlined(hex::encode_upper(&output)).as_bytes().to_vec(),
+        OutputFormat::Base64 => newlined(BASE64_STANDARD.encode(output)).as_bytes().to_vec(),
+        OutputFormat::Base64NoPad => newlined(BASE64_STANDARD_NO_PAD.encode(output))
+            .as_bytes()
+            .to_vec(),
+        OutputFormat::Base64UrlSafe => newlined(BASE64_URL_SAFE.encode(output)).as_bytes().to_vec(),
+        OutputFormat::Base64UrlSafeNoPad => newlined(BASE64_URL_SAFE_NO_PAD.encode(output))
+            .as_bytes()
+            .to_vec(),
     }
+}
+
+/// Adds a new line to an owned string
+fn newlined(s: impl Into<String>) -> String {
+    let s = s.into();
+    format!("{}\n", s)
 }

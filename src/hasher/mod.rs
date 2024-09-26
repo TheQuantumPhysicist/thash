@@ -1,4 +1,4 @@
-mod generic;
+pub mod generic;
 
 use std::{collections::BTreeMap, num::NonZeroU64};
 

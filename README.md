@@ -45,26 +45,26 @@ ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
 - Same, but now as different types of outputs
 
 ```bash
-$ echo -n "abc" | thash -a sha256 -f hex-lower
+$ echo -n "abc" | thash -a sha256 -F hex-lower
 ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
 
-$ echo -n "abc" | thash -a sha256 -f hex-upper
+$ echo -n "abc" | thash -a sha256 -F hex-upper
 BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD
 
-$ echo -n "abc" | thash -a sha256 -f base64
+$ echo -n "abc" | thash -a sha256 -F base64
 ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=
 
-$ echo -n "abc" | thash -a sha256 -f base64-no-pad
+$ echo -n "abc" | thash -a sha256 -F base64-no-pad
 ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0
 
-$ echo -n "abc" | thash -a sha256 -f base64-url-safe
+$ echo -n "abc" | thash -a sha256 -F base64-url-safe
 ungWv48Bz-pBQUDeXa4iI7ADYaOWF3qctBD_YfIAFa0=
 
-$ echo -n "abc" | thash -a sha256 -f base64-url-safe-no-pad
+$ echo -n "abc" | thash -a sha256 -F base64-url-safe-no-pad
 ungWv48Bz-pBQUDeXa4iI7ADYaOWF3qctBD_YfIAFa0
 ```
 
-You can even write the output as binary with `-f binary`! Obviously, this isn't properly visible in a text file. But you can pipe it to other programs.
+You can even write the output as binary with `-F binary`! Obviously, this isn't properly visible in a text file. But you can pipe it to other programs.
 
 - How about hashing "abc" twice using sha256, instead of once?
 
@@ -78,7 +78,7 @@ This will take the hash digest output, and hash it again with sha256.
 - In fact, this is equivalent to this:
 
 ```bash
-$ echo -n "abc" | thash -a sha256 -f binary | thash -a sha256
+$ echo -n "abc" | thash -a sha256 -F binary | thash -a sha256
 4f8b42c22dd3729b519ba6f68d2da7cc5b2d606d05daed5ad5128cc03e6c6358
 ```
 
@@ -87,7 +87,7 @@ Notice how outputting binary is now useful.
 - You can pipe your data through multiple hash functions.
 
 ```bash
-$ echo -n "abc" | thash -a sha256 -f binary | thash -a blake2s -f binary | thash -a sha3-224
+$ echo -n "abc" | thash -a sha256 -F binary | thash -a blake2s -F binary | thash -a sha3-224
 c287a7a4abc221b50aa406b6b6e47017f0bb5bc354870912fc00588d
 ```
 

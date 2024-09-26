@@ -1,4 +1,7 @@
-use std::num::NonZeroU64;
+use std::{
+    num::NonZeroU64,
+    ops::{Deref, DerefMut},
+};
 
 use crate::hashing_lib::Hasher;
 
@@ -46,5 +49,18 @@ impl<H: Hasher> DynHasher for GenericHasher<H> {
 
     fn finalize(&mut self) -> Vec<u8> {
         self.finalize()
+    }
+}
+
+impl<T: Deref + DerefMut> DynHasher for T
+where
+    T::Target: DynHasher,
+{
+    fn write(&mut self, data: &[u8]) {
+        self.deref_mut().write(data)
+    }
+
+    fn finalize(&mut self) -> Vec<u8> {
+        self.deref_mut().finalize()
     }
 }
