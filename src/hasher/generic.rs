@@ -24,12 +24,12 @@ impl<H: Hasher> GenericHasher<H> {
     }
 
     pub fn finalize(&mut self) -> Vec<u8> {
-        let mut hash = self.hasher.finalize();
+        let mut hash = self.hasher.finalize_and_reset();
         // We hashed the data once, let's do the remaining iterations
         for _ in 0..self.iters.get() - 1 {
             self.hasher.reset();
             self.hasher.write(hash);
-            hash = self.hasher.finalize();
+            hash = self.hasher.finalize_and_reset();
         }
         self.hasher.reset();
         hash.to_vec()

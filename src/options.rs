@@ -76,6 +76,7 @@ pub enum HashAlgorithm {
     Blake2b,
     Blake2s,
     Blake3,
+    K12,
     Md5,
     Sha1,
     Sha224,

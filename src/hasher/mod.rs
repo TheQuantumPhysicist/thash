@@ -4,7 +4,7 @@ use std::{collections::BTreeMap, num::NonZeroU64};
 
 use crate::hashing_lib::{
     Blake2b, Blake2s, Blake3, Md5, Sha1, Sha224, Sha256, Sha384, Sha3_224, Sha3_256, Sha3_384,
-    Sha3_512, Sha512,
+    Sha3_512, Sha512, K12,
 };
 use generic::{DynHasher, GenericHasher};
 
@@ -14,11 +14,12 @@ pub fn make_hasher(
     algo: HashAlgorithm,
     iters: NonZeroU64,
     options: &BTreeMap<String, String>,
-) -> anyhow::Result<Box<dyn DynHasher>> {
+) -> anyhow::Result<Box<dyn DynHasher + '_>> {
     let f: Box<dyn DynHasher> = match algo {
         HashAlgorithm::Blake2b => Box::new(make_blake2b_hasher(options, iters)?),
         HashAlgorithm::Blake2s => Box::new(make_blake2s_hasher(options, iters)?),
         HashAlgorithm::Blake3 => Box::new(make_blake3_hasher(options, iters)?),
+        HashAlgorithm::K12 => Box::new(make_k12_hasher(options, iters)?),
         HashAlgorithm::Md5 => Box::new(make_md5_hasher(options, iters)?),
         HashAlgorithm::Sha1 => Box::new(make_sha1_hasher(options, iters)?),
         HashAlgorithm::Sha224 => Box::new(make_sha224_hasher(options, iters)?),
@@ -137,6 +138,15 @@ fn make_blake3_hasher(
     options: &BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericHasher<Blake3>> {
+    ensure_empty_options(options)?;
+
+    Ok(GenericHasher::new(iters))
+}
+
+fn make_k12_hasher(
+    options: &BTreeMap<String, String>,
+    iters: NonZeroU64,
+) -> anyhow::Result<GenericHasher<K12>> {
     ensure_empty_options(options)?;
 
     Ok(GenericHasher::new(iters))
