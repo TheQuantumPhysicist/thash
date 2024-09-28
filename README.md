@@ -24,6 +24,10 @@ Run `thash --help`, to see all available options, algorithms, etc.
 
 The data input is passed through stdin. This program can be seen as a drop-in replacement for all `XXXsum` programs on Linux, usage-wise, assuming the defaults are desired.
 
+For platforms that don't have commands like `cat` to pass a file through stdin, you can use the `-f` command line argument to specify the file, instead of using stdin. If no `-f` is specified, stdin will be used.
+
+### Examples
+
 Anyway, here are some examples on how to use this program, with the expected outcome:
 
 - Hash the string "abc" using blake2b (the default hashing algorithm), and output the hash digest as hex (default output format).
