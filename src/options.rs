@@ -24,7 +24,7 @@ pub struct THashOptions {
 
     /// Options related to hashing algorithms. Some algorithms provide options (or parameters)
     /// related to their hashing. These can be set here.
-    #[arg(hide = true,
+    #[arg(
         short = 'o',
         long = "option",
         action = clap::ArgAction::Append,
