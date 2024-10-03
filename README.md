@@ -97,6 +97,26 @@ c287a7a4abc221b50aa406b6b6e47017f0bb5bc354870912fc00588d
 
 This will hash "abc" with sha256, hash the binary result with blake2s, then hash the binary result with sha3-224, and print the final result.
 
+- Some algorithms provide options. For example, K12 hashing algorithm provides an option to specify the size of the output.
+
+```bash
+$ echo -n "abc" | thash -a k12 -o output-size=64
+ab174f328c55a5510b0b209791bf8b60e801a7cfc2aa42042dcb8f547fbe3a7d3f5b54d116a705d36aac2a7eac7a19e3f0f058cb3c238ac7f034178ae34f212e
+```
+
+To see the available options, input some random value, and the list will be specified
+
+```bash
+$ echo -n "abc" | thash -a k12 -o abc=xyz
+Error: Option abc is not a valid option for algorithm K12. Available options:
+
++-------------+----------------------------------------------+
+| Option name | Description                                  |
++-------------+----------------------------------------------+
+| output-size | The size of the output as a positive integer |
++-------------+----------------------------------------------+
+```
+
 ## Performance
 
 `thash` beats all regular tools, like `sha256`, `b2sum`, etc, in performance. On Mac, the performance of `thash` is even better than shown below, and is faster for everything. However, `md5` is the only exception we found, where `thash` is slower on Linux. Note that this is not gospel, and your machine/OS may behave differently. Feel free to re-run these benchmarks on your computer to evaluate it.
