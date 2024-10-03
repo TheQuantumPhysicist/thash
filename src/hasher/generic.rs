@@ -1,16 +1,15 @@
-use std::{
-    num::NonZeroU64,
-    ops::{Deref, DerefMut},
-};
+use std::num::{NonZeroU64, NonZeroUsize};
 
-use crate::hashing_lib::Hasher;
+use k12::digest::typenum::Unsigned;
 
-pub struct GenericHasher<H: Hasher> {
+use crate::hashing_lib::{sized_hasher::SizedHasher, unsized_hasher::UnsizedHasher};
+
+pub struct GenericSizedHasher<H: SizedHasher> {
     hasher: H,
     iters: NonZeroU64,
 }
 
-impl<H: Hasher> GenericHasher<H> {
+impl<H: SizedHasher> GenericSizedHasher<H> {
     pub fn new(iters: NonZeroU64) -> Self {
         Self {
             hasher: H::new(),
@@ -32,33 +31,43 @@ impl<H: Hasher> GenericHasher<H> {
         }
         hash.to_vec()
     }
-}
 
-pub trait DynHasher {
-    fn write(&mut self, data: &[u8]);
-
-    fn finalize_and_reset(&mut self) -> Vec<u8>;
-}
-
-impl<H: Hasher> DynHasher for GenericHasher<H> {
-    fn write(&mut self, data: &[u8]) {
-        self.write(data);
-    }
-
-    fn finalize_and_reset(&mut self) -> Vec<u8> {
-        self.finalize_and_reset()
+    pub fn output_size(&self) -> NonZeroUsize {
+        <H::OutputSize as Unsigned>::USIZE
+            .try_into()
+            .expect("Sized cannot be zero or less")
     }
 }
 
-impl<T: Deref + DerefMut> DynHasher for T
-where
-    T::Target: DynHasher,
-{
-    fn write(&mut self, data: &[u8]) {
-        self.deref_mut().write(data)
+pub struct GenericUnsizedHasher<H: UnsizedHasher> {
+    hasher: H,
+    iters: NonZeroU64,
+}
+
+impl<H: UnsizedHasher> GenericUnsizedHasher<H> {
+    pub fn new(output_size: NonZeroUsize, iters: NonZeroU64) -> Self {
+        Self {
+            hasher: H::new(output_size),
+            iters,
+        }
     }
 
-    fn finalize_and_reset(&mut self) -> Vec<u8> {
-        self.deref_mut().finalize_and_reset()
+    pub fn write(&mut self, data: &[u8]) -> &mut Self {
+        self.hasher.write(data.as_ref());
+        self
+    }
+
+    pub fn finalize_and_reset(&mut self) -> Vec<u8> {
+        let mut hash = self.hasher.finalize_and_reset();
+        // We hashed the data once, let's do the remaining iterations
+        for _ in 0..self.iters.get() - 1 {
+            self.hasher.write(hash);
+            hash = self.hasher.finalize_and_reset();
+        }
+        hash.to_vec()
+    }
+
+    pub fn output_size(&self) -> NonZeroUsize {
+        self.hasher.output_size()
     }
 }

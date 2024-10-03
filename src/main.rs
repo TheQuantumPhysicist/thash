@@ -6,7 +6,7 @@ use std::io::{Read, Write};
 
 use anyhow::Context;
 use clap::Parser;
-use hasher::{generic::DynHasher, make_hasher};
+use hasher::{make_hasher, traits::DynHasher};
 use options::OutputFormat;
 
 fn main() -> anyhow::Result<()> {
@@ -15,7 +15,7 @@ fn main() -> anyhow::Result<()> {
     let options = args.options()?;
 
     let hash_digest = {
-        let mut hasher = make_hasher(args.hash_algo, args.iters(), &options)?;
+        let mut hasher = make_hasher(args.hash_algo, args.iters(), options.into())?;
 
         match args.file {
             Some(f) => {
@@ -55,7 +55,7 @@ fn open_file(p: impl AsRef<std::path::Path>) -> anyhow::Result<impl Read> {
         ));
     }
 
-    let f = std::fs::File::open(&p).context(format!("Opening file failed: {}", p.display()))?;
+    let f = std::fs::File::open(p).context(format!("Opening file failed: {}", p.display()))?;
 
     Ok(f)
 }
