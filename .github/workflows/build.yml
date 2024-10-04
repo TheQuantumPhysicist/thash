@@ -32,8 +32,6 @@ jobs:
       - name: Run tests
         run: cargo test --verbose
 
-    runs-on: windows-latest
-
   build_windows:
     runs-on: windows-latest
 
