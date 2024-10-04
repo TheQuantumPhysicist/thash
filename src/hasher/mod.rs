@@ -2,7 +2,7 @@ pub mod generic;
 pub mod options;
 pub mod traits;
 
-use std::{collections::BTreeMap, num::NonZeroU64, rc::Rc};
+use std::{collections::BTreeMap, num::NonZeroU64};
 
 use crate::hashing_lib::{
     sized_hasher::{
@@ -20,7 +20,7 @@ use crate::program_options::HashAlgorithm;
 pub fn make_hasher(
     algo: HashAlgorithm,
     iters: NonZeroU64,
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
 ) -> anyhow::Result<Box<dyn DynHasher>> {
     let f: Box<dyn DynHasher> = match algo {
         HashAlgorithm::Blake2b => Box::new(make_blake2b_hasher(options, iters)?),
@@ -43,115 +43,115 @@ pub fn make_hasher(
 }
 
 fn make_sha1_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha1>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_sha224_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha224>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_sha256_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha256>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_sha384_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha384>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_sha512_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha512>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_sha3_224_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha3_224>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_sha3_256_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha3_256>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_sha3_384_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha3_384>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_sha3_512_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Sha3_512>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_blake2b_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Blake2b>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_blake2s_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Blake2s>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_blake3_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Blake3>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }
 
 fn make_k12_hasher<'a>(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericUnsizedHasher<K12<'a>>> {
     let parsed_options = K12Options::parse(options)?;
@@ -160,10 +160,10 @@ fn make_k12_hasher<'a>(
 }
 
 fn make_md5_hasher(
-    options: Rc<BTreeMap<String, String>>,
+    options: BTreeMap<String, String>,
     iters: NonZeroU64,
 ) -> anyhow::Result<GenericSizedHasher<Md5>> {
-    ensure_empty_options(options.as_ref())?;
+    ensure_empty_options(&options)?;
 
     Ok(GenericSizedHasher::new(iters))
 }

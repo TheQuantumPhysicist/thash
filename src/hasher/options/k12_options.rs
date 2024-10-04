@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, num::NonZeroUsize, rc::Rc};
+use std::{collections::BTreeMap, num::NonZeroUsize};
 
 use anyhow::Context;
 
@@ -10,10 +10,10 @@ pub struct K12Options {
     pub output_size: NonZeroUsize,
 }
 
-impl TryFrom<Rc<BTreeMap<String, String>>> for K12Options {
+impl TryFrom<BTreeMap<String, String>> for K12Options {
     type Error = anyhow::Error;
 
-    fn try_from(options: Rc<BTreeMap<String, String>>) -> Result<Self, Self::Error> {
+    fn try_from(options: BTreeMap<String, String>) -> Result<Self, Self::Error> {
         let output_size: NonZeroUsize = options
             .get(OUTPUT_SIZE_KEY)
             .cloned()

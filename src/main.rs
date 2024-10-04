@@ -15,7 +15,7 @@ fn main() -> anyhow::Result<()> {
     let options = args.options()?;
 
     let hash_digest = {
-        let mut hasher = make_hasher(args.hash_algo, args.iters(), options.into())?;
+        let mut hasher = make_hasher(args.hash_algo, args.iters(), options)?;
 
         match args.file {
             Some(f) => {

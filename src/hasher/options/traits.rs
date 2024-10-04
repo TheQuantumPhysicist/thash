@@ -1,6 +1,6 @@
-use std::{collections::BTreeMap, rc::Rc};
+use std::collections::BTreeMap;
 
-pub trait HashingOptions: TryFrom<Rc<BTreeMap<String, String>>, Error = anyhow::Error> {
+pub trait HashingOptions: TryFrom<BTreeMap<String, String>, Error = anyhow::Error> {
     fn algo_name() -> &'static str;
     fn options_descriptions() -> BTreeMap<String, String>;
     fn options_descriptions_table() -> String {
@@ -26,7 +26,7 @@ pub trait HashingOptions: TryFrom<Rc<BTreeMap<String, String>>, Error = anyhow::
         table.to_string()
     }
 
-    fn parse(options: Rc<BTreeMap<String, String>>) -> anyhow::Result<Self> {
+    fn parse(options: BTreeMap<String, String>) -> anyhow::Result<Self> {
         let options_desc = Self::options_descriptions();
 
         for option_key in options.keys() {
@@ -39,7 +39,7 @@ pub trait HashingOptions: TryFrom<Rc<BTreeMap<String, String>>, Error = anyhow::
             }
         }
 
-        let result = <Self as TryFrom<Rc<BTreeMap<String, String>>>>::try_from(options)?;
+        let result = <Self as TryFrom<BTreeMap<String, String>>>::try_from(options)?;
 
         Ok(result)
     }

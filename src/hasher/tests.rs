@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, rc::Rc};
+use std::collections::BTreeMap;
 
 use crate::{hasher::make_hasher, program_options::HashAlgorithm};
 
@@ -14,7 +14,6 @@ fn sha1() {
         "b5c64925eb9940259be55c005c9cecc7d9897ef9",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha1,
@@ -37,7 +36,6 @@ fn sha224() {
         "5b4b17f720d52c6a864229e784fb636184ca48ce7dd848fdad986239",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha224,
@@ -60,7 +58,6 @@ fn sha256() {
         "184f6d6e82554c051b33f15e7ffffecb0cc0f461a29096c41c214e168e34c21d",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha256,
@@ -83,7 +80,6 @@ fn sha384() {
         "a4aa4cd8534aecb2d07765f928303d1d2609835ea85d14312bcee264e99dc5d7dc08bb18ec694053fd7fe6906706d55f",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha384,
@@ -106,7 +102,6 @@ fn sha512() {
         "299b2e3ce932e4d0e9005345e37af5a4cc6be21e6b6e21231ce71ccde2a7aba4a6822cd7a9aaf9b13918db05ede70d3f1e6af65f8ad0bda1c4c4fa263e3cabdd",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha512,
@@ -129,7 +124,6 @@ fn sha3_224() {
         "7d208060760d239d9e9b041b5c30ac992b83ff1df658263953c9eff0",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha3_224,
@@ -152,7 +146,6 @@ fn sha3_256() {
         "fd5ad48a1abf3fd8211ecd2a6a0b0503e745d953def260541fa5db7dc1b3b84f",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha3_256,
@@ -175,7 +168,6 @@ fn sha3_384() {
         "be2f2365cecd5df751f3ab7d23cabfb60491ce28bdf80b121f7941ee33227ce86d5d62d6633f5654a4f3ae5381cf1825",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha3_384,
@@ -198,7 +190,6 @@ fn sha3_512() {
         "8c74189ca608ad188bb96c8c374fb717ce982500dc2c0ce90ad8e5888b498ce9fda0e4bf256feeaaf1674b69e9ea80cf5ed444dfdd5d3eb05cfebd597b4aab67",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Sha3_512,
@@ -221,7 +212,6 @@ fn blake2b() {
         "500cb0c9c086a7d65309a6e1d792501f811812411dc22f557c687af44428b68ce19f15ffe1f469cad0fe1180182151ac86f7f406f97e35f943bb084f1f51462b",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Blake2b,
@@ -244,7 +234,6 @@ fn blake2s() {
         "261be591f339375efa8fc6b929235873f6e7dab1e9ed7cdc7421e7071e7d5c59",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Blake2s,
@@ -269,7 +258,6 @@ fn blake3() {
         "acfec95e0441b70ebce15e924c3d2edacd40d5b2495dc24eb5d3e4ad2f29ca9b",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Blake3,
@@ -292,7 +280,6 @@ fn md5() {
         "e2753218c2dfa2487b258c6868cc8cbe",
     ];
     let opts = BTreeMap::new();
-    let opts = Rc::new(opts);
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::Md5,
@@ -317,8 +304,6 @@ fn k12() {
         "7a79becf8062f604d557f4472f8098678b8c02ac7febbc5c1af9ed5bf9bcbbd2",
     ];
     let opts = BTreeMap::new();
-
-    let opts = Rc::new(opts);
 
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
@@ -350,8 +335,6 @@ fn k12_with_manual_default_size() {
     .into_iter()
     .collect();
 
-    let opts = Rc::new(opts);
-
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
             HashAlgorithm::K12,
@@ -378,8 +361,6 @@ fn k12_with_manual_non_default_size() {
     let opts: BTreeMap<String, String> = [(OUTPUT_SIZE_KEY.to_string(), "64".to_string())]
         .into_iter()
         .collect();
-
-    let opts = Rc::new(opts);
 
     for (i, el) in expected.into_iter().enumerate() {
         let mut hasher = make_hasher(
