@@ -14,7 +14,6 @@ where
 {
     let parsed: T = options
         .get(option_key.as_ref())
-        .cloned()
         .map(|s| s.parse())
         .transpose()
         .context(format!("While parsing option `{}`", option_key.as_ref()))?
