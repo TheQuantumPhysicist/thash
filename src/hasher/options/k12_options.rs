@@ -4,7 +4,10 @@ use anyhow::Context;
 
 use super::{common::OUTPUT_SIZE_KEY, traits::HashingOptions};
 
-pub const DEFAULT_OUTPUT_SIZE: usize = 32;
+pub const DEFAULT_OUTPUT_SIZE: NonZeroUsize = match NonZeroUsize::new(32) {
+    Some(v) => v,
+    None => unreachable!(),
+};
 
 pub struct K12Options {
     pub output_size: NonZeroUsize,
