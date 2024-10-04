@@ -3,6 +3,13 @@ use std::{collections::BTreeMap, num::NonZeroU64};
 use clap::{Parser, ValueEnum};
 
 #[derive(Parser, Clone, Debug, Default)]
+#[command(
+    name = "thash",
+    version = env!("CARGO_PKG_VERSION"),
+    long_about = "A fast and versatile terminal hashing program that prints the hash digest to stdout, with many hashing algorithms, many output formats, and support to request the number of iterations for hashing.",
+    author = "TheQuantumPhysicist <https://github.com/TheQuantumPhysicist>",
+    after_help = r#"Pipe data into thash to calculate their hash digest. Example: echo -n "abc" | thash -a blake3"#
+)]
 pub struct THashOptions {
     /// The algorithm that will be used to hash the given data.
     #[arg(long, short('a'), value_name("ALGORITHM"), default_value_t = HashAlgorithm::default())]
