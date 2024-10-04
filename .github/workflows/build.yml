@@ -21,6 +21,8 @@ jobs:
         run: cargo build --verbose
       - name: Run tests
         run: cargo test --verbose
+      - name: Tests in terminal
+        run: bash test-tools/run-cmd-tests.sh
 
   build_macos:
     runs-on: macos-latest
@@ -31,6 +33,8 @@ jobs:
         run: cargo build --verbose
       - name: Run tests
         run: cargo test --verbose
+      - name: Tests in terminal
+        run: bash test-tools/run-cmd-tests.sh
 
   build_windows:
     runs-on: windows-latest
@@ -41,3 +45,6 @@ jobs:
         run: cargo build --verbose
       - name: Run tests
         run: cargo test --verbose
+      - name: Tests in terminal
+        shell: bash
+        run: ./test-tools/run-cmd-tests.sh
