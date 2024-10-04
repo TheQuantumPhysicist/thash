@@ -19,7 +19,7 @@ impl TryFrom<BTreeMap<String, String>> for K12Options {
             .cloned()
             .unwrap_or(DEFAULT_OUTPUT_SIZE.to_string())
             .parse()
-            .context("While parsing output size")?;
+            .context("While parsing output-size")?;
 
         Ok(Self { output_size })
     }
