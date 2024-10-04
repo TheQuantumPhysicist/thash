@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, rc::Rc};
 
-use crate::{hasher::make_hasher, options::HashAlgorithm};
+use crate::{hasher::make_hasher, program_options::HashAlgorithm};
 
 use super::k12_options;
 

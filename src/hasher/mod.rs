@@ -15,7 +15,7 @@ use generic::{GenericSizedHasher, GenericUnsizedHasher};
 use k12_options::{HashingOptions, K12Options};
 use traits::DynHasher;
 
-use crate::options::HashAlgorithm;
+use crate::program_options::HashAlgorithm;
 
 pub fn make_hasher(
     algo: HashAlgorithm,

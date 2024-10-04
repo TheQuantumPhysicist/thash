@@ -1,16 +1,16 @@
 mod hasher;
 mod hashing_lib;
-mod options;
+mod program_options;
 
 use std::io::{Read, Write};
 
 use anyhow::Context;
 use clap::Parser;
 use hasher::{make_hasher, traits::DynHasher};
-use options::OutputFormat;
+use program_options::OutputFormat;
 
 fn main() -> anyhow::Result<()> {
-    let args: options::THashOptions = options::THashOptions::parse();
+    let args: program_options::THashOptions = program_options::THashOptions::parse();
 
     let options = args.options()?;
 
