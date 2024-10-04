@@ -39,7 +39,7 @@ pub trait HashingOptions: TryFrom<BTreeMap<String, String>, Error = anyhow::Erro
             }
         }
 
-        let result = <Self as TryFrom<BTreeMap<String, String>>>::try_from(options)?;
+        let result = <Self as TryFrom<_>>::try_from(options)?;
 
         Ok(result)
     }
