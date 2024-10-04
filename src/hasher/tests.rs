@@ -2,7 +2,7 @@ use std::{collections::BTreeMap, rc::Rc};
 
 use crate::{hasher::make_hasher, program_options::HashAlgorithm};
 
-use super::k12_options;
+use super::options::{common::OUTPUT_SIZE_KEY, k12_options};
 
 #[test]
 fn sha1() {
@@ -344,7 +344,7 @@ fn k12_with_manual_default_size() {
         "7a79becf8062f604d557f4472f8098678b8c02ac7febbc5c1af9ed5bf9bcbbd2",
     ];
     let opts: BTreeMap<String, String> = [(
-        k12_options::OUTPUT_SIZE_KEY.to_string(),
+        OUTPUT_SIZE_KEY.to_string(),
         k12_options::DEFAULT_OUTPUT_SIZE.to_string(),
     )]
     .into_iter()
@@ -375,10 +375,9 @@ fn k12_with_manual_non_default_size() {
         "39d6703df1e0efefc212539c434c787f0e500ef2a59530ce1e390fef1bdd3ff6160d7bcb5c99562f21309722e792b99f53c15923393932e6c8c52b78cec67cc5",
         "5a64ecb9f9b01b665b49fa6ebd4de4c73f5a2709e495555563fbddc9e9737771c71cd68613df48351ff321e73585e938bc4df6c1ebaa959547b165535146f05e",
     ];
-    let opts: BTreeMap<String, String> =
-        [(k12_options::OUTPUT_SIZE_KEY.to_string(), "64".to_string())]
-            .into_iter()
-            .collect();
+    let opts: BTreeMap<String, String> = [(OUTPUT_SIZE_KEY.to_string(), "64".to_string())]
+        .into_iter()
+        .collect();
 
     let opts = Rc::new(opts);
 

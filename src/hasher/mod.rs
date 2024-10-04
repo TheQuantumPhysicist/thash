@@ -1,5 +1,5 @@
 pub mod generic;
-pub mod k12_options;
+pub mod options;
 pub mod traits;
 
 use std::{collections::BTreeMap, num::NonZeroU64, rc::Rc};
@@ -12,7 +12,7 @@ use crate::hashing_lib::{
     unsized_hasher::K12,
 };
 use generic::{GenericSizedHasher, GenericUnsizedHasher};
-use k12_options::{HashingOptions, K12Options};
+use options::{k12_options::K12Options, traits::HashingOptions};
 use traits::DynHasher;
 
 use crate::program_options::HashAlgorithm;
