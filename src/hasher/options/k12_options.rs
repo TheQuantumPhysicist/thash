@@ -1,8 +1,9 @@
 use std::{collections::BTreeMap, num::NonZeroUsize};
 
-use anyhow::Context;
-
-use super::{common::OUTPUT_SIZE_KEY, traits::HashingOptions};
+use super::{
+    common::{parse_option, OUTPUT_SIZE_KEY},
+    traits::HashingOptions,
+};
 
 pub const DEFAULT_OUTPUT_SIZE: NonZeroUsize = match NonZeroUsize::new(32) {
     Some(v) => v,
@@ -17,12 +18,8 @@ impl TryFrom<BTreeMap<String, String>> for K12Options {
     type Error = anyhow::Error;
 
     fn try_from(options: BTreeMap<String, String>) -> Result<Self, Self::Error> {
-        let output_size: NonZeroUsize = options
-            .get(OUTPUT_SIZE_KEY)
-            .cloned()
-            .unwrap_or(DEFAULT_OUTPUT_SIZE.to_string())
-            .parse()
-            .context(format!("While parsing option `{OUTPUT_SIZE_KEY}`"))?;
+        let output_size =
+            parse_option::<NonZeroUsize>(&options, OUTPUT_SIZE_KEY, DEFAULT_OUTPUT_SIZE)?;
 
         Ok(Self { output_size })
     }
